@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  tomcat:
+    build: .
+    ports:
+      - '8080:8080'
+    container_name: 'tomcat'
+    links:
+      - 'mysql'
+
+  mysql:
+    image: 'daocloud.io/library/mysql:5.7.7'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=root'
+    volumes:
+      - 'D:/database:/var/lib/mysql'
+    container_name: 'mysql'
+    ports:
+      - '3306:3306'

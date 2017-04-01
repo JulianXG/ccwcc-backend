@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="cn.kalyter.ccwcc.spring,cn.kalyter.ccwcc.controller"/>
+    <mvc:default-servlet-handler/>
+
+	<!--spring 注释支持-->
+	<mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <value>application/json;charset=UTF-8</value>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--资源文件-->
+    <bean id="properties" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>classpath:*.properties</value>
+            </array>
+        </property>
+        <property name="fileEncoding" value="UTF-8"/>
+    </bean>
+
+    <mvc:interceptors>
+        <bean class="cn.kalyter.ccwcc.spring.CORSInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/role*/**"/>
+            <bean class="cn.kalyter.ccwcc.spring.AuthenticationInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

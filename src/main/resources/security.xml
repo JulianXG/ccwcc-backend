@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security
+                           http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!--TODO 希望以后采用Spring Security的方式进行用户验证，现在因为并不熟悉这个框架，-->
+    <!--TODO 并且没有太多时间去研究，基本上所有的用户验证逻辑是自己手写的-->
+    <security:http auto-config="false" create-session="stateless">
+        <!--过滤登录请求-->
+        <!--<security:custom-filter ref="" position="FORM_LOGIN_FILTER"/>-->
+        <!--<security:intercept-url pattern="/user/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+        <!--<security:remember-me user-service-ref="userDetailsManager"/>-->
+        <!--api请求-->
+        <security:intercept-url pattern="/api/**" access="hasRole('ROLE_USER')"/>
+        <security:http-basic/>
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:jdbc-user-service id="userDetailsManager" data-source-ref="dataSource"
+                                        users-by-username-query="
+                                        SELECT username, password, 1 ENABLE
+                                        FROM user WHERE username = ? AND is_deleted = 0"
+                                        group-authorities-by-username-query="
+                                        SELECT r.id, r.name group_name, p.name authority
+                                        FROM role r
+                                        LEFT JOIN user_role ur ON ur.role_id = r.id
+                                        LEFT JOIN user u ON ur.user_id = u.id
+                                        LEFT JOIN role_permission rp ON r.id = rp.role_id
+                                        LEFT JOIN permission p ON rp.permission_id = p.id
+                                        WHERE u.username = ?"
+                                        authorities-by-username-query="
+                                        SELECT username,name authority
+                                        FROM user LEFT JOIN user_role ON user.id = user_role.user_id
+                                        LEFT JOIN role ON role.id = user_role.role_id
+                                        WHERE user.username = ?"/>
+            <!--<security:password-encoder hash="md5"/>-->
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>

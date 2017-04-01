@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--<classPathEntry-->
+            <!--location="C:/Users/Asus/.m2/repository/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar"/>-->
+    <context targetRuntime="MyBatis3" id="MyGenerator">
+
+        <plugin type="cn.kalyter.ccwcc.spring.PaginationPlugin"/>
+
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/ccwcc"
+                        userId="root"
+                        password="root"/>
+
+        <!--实体类-->
+        <javaModelGenerator targetPackage="cn.kalyter.ccwcc.model"
+                            targetProject="src/main/java">
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--xml文件-->
+        <sqlMapGenerator targetPackage="cn.kalyter.ccwcc.mapper"
+                         targetProject="src/main/java"/>
+
+        <!--mapper接口类-->
+        <javaClientGenerator targetPackage="cn.kalyter.ccwcc.dao"
+                             targetProject="src/main/java" type="XMLMAPPER"/>
+
+        <!--<table tableName="bird"/>-->
+        <!--<table tableName="flag"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <!--<table tableName="record"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <!--<table tableName="role"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <!--<table tableName="user"/>-->
+        <!--<table tableName="user_role"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <!--<table tableName="permission"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <!--<table tableName="role_permission"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <!--<table tableName="token"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <table tableName="checkpoint"
+               enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>
+
+    </context>
+</generatorConfiguration>
