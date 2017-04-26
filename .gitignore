@@ -1,7 +1,5 @@
 target/
 
-.idea/
-
 # IntelliJ
 out/
 test/

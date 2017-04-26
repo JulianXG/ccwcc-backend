@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="ccwcc@kalyter.cn">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.0">
+    <root id="1"/>
+    <schema id="2" parent="1" name="ccwcc">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mysql"/>
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="ss"/>
+    <schema id="7" parent="1" name="test"/>
+    <table id="8" parent="2" name="birds">
+      <Comment>鸟类</Comment>
+    </table>
+    <table id="9" parent="2" name="flag">
+      <Comment>旗标</Comment>
+    </table>
+    <table id="10" parent="2" name="record">
+      <Comment>记录</Comment>
+    </table>
+    <table id="11" parent="2" name="role"/>
+    <table id="12" parent="2" name="statistics"/>
+    <table id="13" parent="2" name="user"/>
+    <column id="14" parent="8" name="id">
+      <Position>1</Position>
+      <Comment>鸟类ID</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="15" parent="8" name="code">
+      <Position>2</Position>
+      <Comment>鸟类编码</Comment>
+      <DataType>varchar(8)|0</DataType>
+    </column>
+    <column id="16" parent="8" name="name_zh">
+      <Position>3</Position>
+      <Comment>中文名称</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="17" parent="8" name="name_en">
+      <Position>4</Position>
+      <Comment>英文名称</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="18" parent="8" name="name_lt">
+      <Position>5</Position>
+      <Comment>英文名称</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="19" parent="8" name="protect_class">
+      <Position>6</Position>
+      <Comment>受保护等级</Comment>
+      <DataType>int(2)|0</DataType>
+    </column>
+    <column id="20" parent="8" name="nation">
+      <Position>7</Position>
+      <Comment>国家</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="21" parent="8" name="order">
+      <Position>8</Position>
+      <Comment>目</Comment>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="22" parent="8" name="family">
+      <Position>9</Position>
+      <Comment>科</Comment>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="23" parent="8" name="genus">
+      <Position>10</Position>
+      <Comment>种</Comment>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="24" parent="8" name="category">
+      <Position>11</Position>
+      <Comment>分类</Comment>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="25" parent="8" name="one_percent_standard">
+      <Position>12</Position>
+      <Comment>1%标准</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="26" parent="8" name="threatened">
+      <Position>13</Position>
+      <Comment>受胁</Comment>
+      <DataType>varchar(2)|0</DataType>
+    </column>
+    <column id="27" parent="8" name="is_water_bird">
+      <Position>14</Position>
+      <Comment>是否为水鸟</Comment>
+      <DataType>tinyint(1)|0</DataType>
+    </column>
+    <column id="28" parent="8" name="is_wetland_depend_bird">
+      <Position>15</Position>
+      <Comment>是否为湿地依赖鸟类</Comment>
+      <DataType>tinyint(1)|0</DataType>
+    </column>
+    <column id="29" parent="8" name="zh_pinyin">
+      <Position>16</Position>
+      <Comment>鸟种拼音</Comment>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="30" parent="8" name="is_deleted">
+      <Position>17</Position>
+      <Comment>是否删除</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="31" parent="8" name="create_time">
+      <Position>18</Position>
+      <Comment>创建时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="32" parent="8" name="update_time">
+      <Position>19</Position>
+      <Comment>更新时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <index id="33" parent="8" name="birds_code_uindex">
+      <ColNames>code</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="34" parent="8" name="birds_name_zh_name_en_name_lt_uindex">
+      <ColNames>name_zh
+name_en
+name_lt</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="35" parent="8" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="36" parent="8" name="birds_code_uindex">
+      <ColNames>code</ColNames>
+      <UnderlyingIndexName>birds_code_uindex</UnderlyingIndexName>
+    </key>
+    <key id="37" parent="8" name="birds_name_zh_name_en_name_lt_uindex">
+      <ColNames>name_zh
+name_en
+name_lt</ColNames>
+      <UnderlyingIndexName>birds_name_zh_name_en_name_lt_uindex</UnderlyingIndexName>
+    </key>
+    <column id="38" parent="9" name="id">
+      <Position>1</Position>
+      <Comment>旗标ID</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="39" parent="9" name="user_id">
+      <Position>2</Position>
+      <Comment>用户ID</Comment>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="40" parent="9" name="bird_id">
+      <Position>3</Position>
+      <Comment>鸟种ID</Comment>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="41" parent="9" name="code">
+      <Position>4</Position>
+      <Comment>旗标编码</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="42" parent="9" name="flag_color_combination">
+      <Position>5</Position>
+      <Comment>旗标颜色组合</Comment>
+      <DataType>enum(&apos;R&apos;, &apos;G&apos;, &apos;B&apos;, &apos;O&apos;, &apos;W&apos;, &apos;Y&apos;)|0</DataType>
+    </column>
+    <column id="43" parent="9" name="lu">
+      <Position>6</Position>
+      <Comment>旗标彩环组合左胫</Comment>
+      <DataType>enum(&apos;r&apos;, &apos;g&apos;, &apos;b&apos;, &apos;l&apos;, &apos;y&apos;, &apos;w&apos;)|0</DataType>
+    </column>
+    <column id="44" parent="9" name="ru">
+      <Position>7</Position>
+      <Comment>旗标彩环组合右胫</Comment>
+      <DataType>enum(&apos;r&apos;, &apos;g&apos;, &apos;b&apos;, &apos;l&apos;, &apos;y&apos;, &apos;w&apos;)|0</DataType>
+    </column>
+    <column id="45" parent="9" name="ld">
+      <Position>8</Position>
+      <Comment>旗标彩环组合左跗</Comment>
+      <DataType>enum(&apos;r&apos;, &apos;g&apos;, &apos;b&apos;, &apos;l&apos;, &apos;y&apos;, &apos;w&apos;)|0</DataType>
+    </column>
+    <column id="46" parent="9" name="rd">
+      <Position>9</Position>
+      <Comment>旗标彩环组合右跗</Comment>
+      <DataType>enum(&apos;r&apos;, &apos;g&apos;, &apos;b&apos;, &apos;l&apos;, &apos;y&apos;, &apos;w&apos;)|0</DataType>
+    </column>
+    <column id="47" parent="9" name="discovered_time">
+      <Position>10</Position>
+      <Comment>发现时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="48" parent="9" name="note">
+      <Position>11</Position>
+      <Comment>备注</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="49" parent="9" name="is_deleted">
+      <Position>12</Position>
+      <Comment>是否删除</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="50" parent="9" name="create_time">
+      <Position>13</Position>
+      <Comment>创建时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="51" parent="9" name="update_time">
+      <Position>14</Position>
+      <Comment>更新时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <index id="52" parent="9" name="flag_user_id_create_time_update_time_index">
+      <ColNames>user_id
+create_time
+update_time</ColNames>
+    </index>
+    <key id="53" parent="9" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="54" parent="10" name="id">
+      <Position>1</Position>
+      <Comment>记录ID</Comment>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="55" parent="10" name="bird_id">
+      <Position>2</Position>
+      <Comment>鸟种ID</Comment>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="56" parent="10" name="userid">
+      <Position>3</Position>
+      <Comment>用户ID</Comment>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="57" parent="10" name="bird_count">
+      <Position>4</Position>
+      <Comment>鸟种数量</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="58" parent="10" name="position">
+      <Position>5</Position>
+      <Comment>发现地址</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="59" parent="10" name="detail">
+      <Position>6</Position>
+      <Comment>详情</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="60" parent="10" name="lat">
+      <Position>7</Position>
+      <Comment>纬度</Comment>
+      <DataType>double(10,6)|0</DataType>
+    </column>
+    <column id="61" parent="10" name="lon">
+      <Position>8</Position>
+      <Comment>经度</Comment>
+      <DataType>double(10,6)|0</DataType>
+    </column>
+    <column id="62" parent="10" name="weather">
+      <Position>9</Position>
+      <Comment>天气</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="63" parent="10" name="record_time">
+      <Position>10</Position>
+      <Comment>记录时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="64" parent="10" name="is_deleted">
+      <Position>11</Position>
+      <Comment>是否删除</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="65" parent="10" name="create_time">
+      <Position>12</Position>
+      <Comment>创建时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="66" parent="10" name="update_time">
+      <Position>13</Position>
+      <Comment>更新时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="67" parent="10" name="user_id">
+      <Position>3</Position>
+      <Comment>用户ID</Comment>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <key id="68" parent="10" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="69" parent="11" name="id">
+      <Position>1</Position>
+      <Comment>角色ID</Comment>
+      <DataType>int(10) unsigned|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="70" parent="11" name="name">
+      <Position>2</Position>
+      <Comment>角色名称</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="71" parent="11" name="parent_id">
+      <Position>3</Position>
+      <Comment>父角色ID</Comment>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="72" parent="11" name="description">
+      <Position>4</Position>
+      <Comment>描述</Comment>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="73" parent="11" name="create_time">
+      <Position>5</Position>
+      <Comment>创建时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="74" parent="11" name="update_time">
+      <Position>6</Position>
+      <Comment>更新时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="75" parent="11" name="is_deleted">
+      <Position>7</Position>
+      <Comment>删除标签</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="76" parent="11" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="77" parent="12" name="itemname">
+      <Position>1</Position>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="78" parent="12" name="quantity">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="79" parent="12" name="speciescount">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="80" parent="13" name="id">
+      <Position>1</Position>
+      <Comment>用户ID</Comment>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="81" parent="13" name="username">
+      <Position>2</Position>
+      <Comment>用户名</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="82" parent="13" name="avatar">
+      <Position>3</Position>
+      <Comment>头像图片地址</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="83" parent="13" name="email">
+      <Position>4</Position>
+      <Comment>电邮地址</Comment>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="84" parent="13" name="password">
+      <Position>5</Position>
+      <Comment>用户密码</Comment>
+      <DataType>varchar(20)|0</DataType>
+    </column>
+    <column id="85" parent="13" name="sex">
+      <Position>6</Position>
+      <Comment>性别</Comment>
+      <DataType>enum(&apos;MAN&apos;, &apos;WOMAN&apos;)|0</DataType>
+    </column>
+    <column id="86" parent="13" name="qq">
+      <Position>7</Position>
+      <Comment>qq号码</Comment>
+      <DataType>varchar(16)|0</DataType>
+    </column>
+    <column id="87" parent="13" name="nickname">
+      <Position>8</Position>
+      <Comment>用户昵称</Comment>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="88" parent="13" name="tel">
+      <Position>9</Position>
+      <Comment>手机号码</Comment>
+      <DataType>varchar(13)|0</DataType>
+    </column>
+    <column id="89" parent="13" name="role_id">
+      <Position>10</Position>
+      <Comment>用户角色ID</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="90" parent="13" name="checkpoint">
+      <Position>11</Position>
+      <Comment>用户检查地址</Comment>
+      <DataType>varchar(100)|0</DataType>
+    </column>
+    <column id="91" parent="13" name="login_time">
+      <Position>12</Position>
+      <Comment>此次登录时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="92" parent="13" name="login_count">
+      <Position>13</Position>
+      <Comment>登录次数统计</Comment>
+      <DataType>int(10)|0</DataType>
+    </column>
+    <column id="93" parent="13" name="last_login_time">
+      <Position>14</Position>
+      <Comment>上次登录时间</Comment>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="94" parent="13" name="create_time">
+      <Position>15</Position>
+      <Comment>创建时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="95" parent="13" name="update_time">
+      <Position>16</Position>
+      <Comment>更新时间</Comment>
+      <DataType>datetime|0</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <column id="96" parent="13" name="is_deleted">
+      <Position>17</Position>
+      <Comment>删除标签</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="97" parent="13" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
