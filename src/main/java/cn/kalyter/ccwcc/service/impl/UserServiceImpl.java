@@ -24,8 +24,10 @@ public class UserServiceImpl implements UserService {
         UserExample example = new UserExample();
         example.or().andUsernameEqualTo(user.getUsername())
                 .andPasswordEqualTo(user.getPassword());
-        User result = userMapper.selectByExample(example).get(0);
-        if (result != null) {
+        User result = null;
+        List<User> users = userMapper.selectByExample(example);
+        if (users.size() > 0) {
+            result = users.get(0);
             Date now = new Date();
             Date lastLoginTime = result.getLoginTime();
             if (lastLoginTime == null) {

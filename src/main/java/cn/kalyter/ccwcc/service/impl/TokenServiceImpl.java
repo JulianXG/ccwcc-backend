@@ -46,15 +46,15 @@ public class TokenServiceImpl implements TokenService {
             String userJSON = mapper.writeValueAsString(user);
             String code = userJSON + now.getTime();
             byte[] bytes = messageDigest.digest(code.getBytes());
-            String md5Result = "";
+            StringBuilder md5Result = new StringBuilder();
             for (byte aByte : bytes) {
                 String string = Integer.toHexString(aByte & 0xFF);
                 if (string.length() == 1) {
                     string += "F";
                 }
-                md5Result += string;
+                md5Result.append(string);
             }
-            result.setToken(md5Result.toUpperCase());
+            result.setToken(md5Result.toString().toUpperCase());
             result.setExpireTime(Constant.DEFAULT_EXPIRE_TIME);
             result.setUserId(user.getId());
             result.setCreateTime(now);
@@ -83,42 +83,46 @@ public class TokenServiceImpl implements TokenService {
         token = (token == null) ? "" : token;     //处理null
         TokenExample tokenExample = new TokenExample();
         tokenExample.or().andTokenEqualTo(token);
-        Token result = tokenMapper.selectByExample(tokenExample).get(0);
-        if (result != null && result.getRequestTime().getTime() +
-                result.getExpireTime() * 60 * 60 * 1000 >= new Date().getTime()) {
-            //token没过期的情况下，根据URL查询当前用户权限是否满足
-            String requestPermission = "";
-            int nextIndex = requestURL.indexOf('/', 5);
-            if (nextIndex > -1) {
-                requestPermission = requestURL.substring(5, nextIndex);
-            }
-            if (!requestPermission.equals("")) {
-                //请求所需要权限
-                PermissionExample example = new PermissionExample();
-                example.or().andNameEqualTo(requestPermission);
-                List<Permission> permissionList = permissionMapper.selectByExample(example);
-                //用户所拥有的权限
-                UserRoleExample userRoleExample = new UserRoleExample();
-                userRoleExample.or().andUserIdEqualTo(result.getUserId());
-                List<UserRole> userRole = userRoleMapper.selectByExample(userRoleExample);
-                if (permissionList.size() > 0 && userRole.size() > 0) {
-                    int requestPermissionId = permissionList.get(0).getId();
-                    int roleId = roleMapper.selectByPrimaryKey(userRole.get(0).getRoleId()).getId();
-                    RolePermissionExample rpExample = new RolePermissionExample();
-                    rpExample.or().andRoleIdEqualTo(roleId).andPermissionIdEqualTo(requestPermissionId);
-                    List<RolePermission> list = rolePermissionMapper.selectByExample(rpExample);
-                    if (list == null || list.size() == 0) {
-                        //判断此用户没有请求需要的权限
+        List<Token> tokens = tokenMapper.selectByExample(tokenExample);
+        Token result = null;
+        if (tokens.size() > 0) {
+            result = tokens.get(0);
+            if (result != null && result.getRequestTime().getTime() +
+                    result.getExpireTime() * 60 * 60 * 1000 >= new Date().getTime()) {
+                //token没过期的情况下，根据URL查询当前用户权限是否满足
+                String requestPermission = "";
+                int nextIndex = requestURL.indexOf('/', 5);
+                if (nextIndex > -1) {
+                    requestPermission = requestURL.substring(5, nextIndex);
+                }
+                if (!requestPermission.equals("")) {
+                    //请求所需要权限
+                    PermissionExample example = new PermissionExample();
+                    example.or().andNameEqualTo(requestPermission);
+                    List<Permission> permissionList = permissionMapper.selectByExample(example);
+                    //用户所拥有的权限
+                    UserRoleExample userRoleExample = new UserRoleExample();
+                    userRoleExample.or().andUserIdEqualTo(result.getUserId());
+                    List<UserRole> userRole = userRoleMapper.selectByExample(userRoleExample);
+                    if (permissionList.size() > 0 && userRole.size() > 0) {
+                        int requestPermissionId = permissionList.get(0).getId();
+                        int roleId = roleMapper.selectByPrimaryKey(userRole.get(0).getRoleId()).getId();
+                        RolePermissionExample rpExample = new RolePermissionExample();
+                        rpExample.or().andRoleIdEqualTo(roleId).andPermissionIdEqualTo(requestPermissionId);
+                        List<RolePermission> list = rolePermissionMapper.selectByExample(rpExample);
+                        if (list == null || list.size() == 0) {
+                            //判断此用户没有请求需要的权限
+                            result = null;
+                        }
+                    } else {
+                        //数据库对应字段缺失
                         result = null;
                     }
-                } else {
-                    //数据库对应字段缺失
-                    result = null;
                 }
+            } else {
+                //token已经过期
+                result = null;
             }
-        } else {
-            //token已经过期
-            result = null;
         }
         return result;
     }
