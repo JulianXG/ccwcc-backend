@@ -10,6 +10,7 @@ import cn.kalyter.ccwcc.model.*;
 import cn.kalyter.ccwcc.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.misc.REException;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -24,7 +25,22 @@ public class RecordServiceImpl implements RecordService {
     private BirdMapper birdMapper;
 
     @Override
+    public ChartData<Double> getMapData() {
+        return null;
+    }
+
+    @Override
+    public List<Record> getRecordByKeywords(String keywords) {
+
+        return null;
+    }
+
+    @Override
     public int saveFlag(Flag flag) {
+        flag.setLd(flag.getLd().equals("") ? null : flag.getLd());
+        flag.setLu(flag.getLu().equals("") ? null : flag.getLu());
+        flag.setRd(flag.getRd().equals("") ? null : flag.getRd());
+        flag.setRu(flag.getRu().equals("") ? null : flag.getRu());
         return flagMapper.insertSelective(flag);
     }
 
@@ -33,13 +49,19 @@ public class RecordServiceImpl implements RecordService {
         int result = 0;
         if (record.getBirds() != null) {
             for (BirdRecord item : record.getBirds()) {
-                Bird bird = birdMapper.selectByPrimaryKey(item.getId());
                 record.setBirdId(item.getId());
                 record.setBirdCount(item.getCount());
-                record.setCategory(bird.getCategory());
-                record.setSpecies(bird.getNameZh());
                 result += recordMapper.insertSelective(record);
             }
+        }
+        return result;
+    }
+
+    @Override
+    public int saveRecords(List<Record> records) {
+        int result = 0;
+        for (Record record : records) {
+            result += saveRecord(record);
         }
         return result;
     }
@@ -57,12 +79,7 @@ public class RecordServiceImpl implements RecordService {
                     .andBirdIdEqualTo(condition.getId())
                     .andUserIdEqualTo(condition.getUserId())
                     .andBirdCountLessThanOrEqualTo(condition.getBirdCount())
-                    .andPositionLike(String.format("%%%s%%", condition.getPosition()))
                     .andDetailLike(condition.getDetail())
-                    .andLonEqualTo(condition.getLon())
-                    .andLatEqualTo(condition.getLat())
-                    .andCategoryEqualTo(condition.getCategory())
-                    .andSpeciesEqualTo(condition.getSpecies())
                     .andWeatherLike(String.format("%%%s%%", condition.getWeather()))
                     .andRecordTimeEqualTo(condition.getRecordTime());
         }

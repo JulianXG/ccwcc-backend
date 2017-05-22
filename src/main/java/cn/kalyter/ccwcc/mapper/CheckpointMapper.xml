@@ -9,7 +9,7 @@
     <result column="city" property="city" jdbcType="VARCHAR" />
     <result column="county" property="county" jdbcType="VARCHAR" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <result column="lontitude" property="lontitude" jdbcType="DOUBLE" />
+    <result column="longitude" property="longitude" jdbcType="DOUBLE" />
     <result column="latitude" property="latitude" jdbcType="DOUBLE" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, description, province, city, county, detail, lontitude, latitude, create_time, 
+    id, name, description, province, city, county, detail, longitude, latitude, create_time,
     update_time, is_deleted
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.kalyter.ccwcc.model.CheckpointExample" >
@@ -103,12 +103,12 @@
   <insert id="insert" parameterType="cn.kalyter.ccwcc.model.Checkpoint" >
     insert into checkpoint (id, name, description, 
       province, city, county, 
-      detail, lontitude, latitude, 
+      detail, longitude, latitude,
       create_time, update_time, is_deleted
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=VARCHAR}, #{lontitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, 
+      #{detail,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
       )
   </insert>
@@ -136,8 +136,8 @@
       <if test="detail != null" >
         detail,
       </if>
-      <if test="lontitude != null" >
-        lontitude,
+      <if test="longitude != null" >
+        longitude,
       </if>
       <if test="latitude != null" >
         latitude,
@@ -174,8 +174,8 @@
       <if test="detail != null" >
         #{detail,jdbcType=VARCHAR},
       </if>
-      <if test="lontitude != null" >
-        #{lontitude,jdbcType=DOUBLE},
+      <if test="longitude != null" >
+        #{longitude,jdbcType=DOUBLE},
       </if>
       <if test="latitude != null" >
         #{latitude,jdbcType=DOUBLE},
@@ -221,8 +221,8 @@
       <if test="record.detail != null" >
         detail = #{record.detail,jdbcType=VARCHAR},
       </if>
-      <if test="record.lontitude != null" >
-        lontitude = #{record.lontitude,jdbcType=DOUBLE},
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=DOUBLE},
       </if>
       <if test="record.latitude != null" >
         latitude = #{record.latitude,jdbcType=DOUBLE},
@@ -250,7 +250,7 @@
       city = #{record.city,jdbcType=VARCHAR},
       county = #{record.county,jdbcType=VARCHAR},
       detail = #{record.detail,jdbcType=VARCHAR},
-      lontitude = #{record.lontitude,jdbcType=DOUBLE},
+      longitude = #{record.longitude,jdbcType=DOUBLE},
       latitude = #{record.latitude,jdbcType=DOUBLE},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -280,8 +280,8 @@
       <if test="detail != null" >
         detail = #{detail,jdbcType=VARCHAR},
       </if>
-      <if test="lontitude != null" >
-        lontitude = #{lontitude,jdbcType=DOUBLE},
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=DOUBLE},
       </if>
       <if test="latitude != null" >
         latitude = #{latitude,jdbcType=DOUBLE},
@@ -306,7 +306,7 @@
       city = #{city,jdbcType=VARCHAR},
       county = #{county,jdbcType=VARCHAR},
       detail = #{detail,jdbcType=VARCHAR},
-      lontitude = #{lontitude,jdbcType=DOUBLE},
+      longitude = #{longitude,jdbcType=DOUBLE},
       latitude = #{latitude,jdbcType=DOUBLE},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

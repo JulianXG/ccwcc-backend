@@ -4,10 +4,19 @@
 package cn.kalyter.ccwcc.service;
 
 import cn.kalyter.ccwcc.model.Pagination;
+import cn.kalyter.ccwcc.model.Response;
 import cn.kalyter.ccwcc.model.User;
 
+import java.util.Map;
+
 public interface UserService {
-    User login(User user);
+    int update(User user);
+
+    User get(int id);
+
+    int delete(int id);
+
+    Response login(User user);
 
     User register(User user);
 

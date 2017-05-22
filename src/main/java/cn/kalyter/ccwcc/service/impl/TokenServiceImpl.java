@@ -25,8 +25,6 @@ public class TokenServiceImpl implements TokenService {
     @Autowired
     private TokenMapper tokenMapper;
     @Autowired
-    private UserRoleMapper userRoleMapper;
-    @Autowired
     private RoleMapper roleMapper;
     @Autowired
     private PermissionMapper permissionMapper;
@@ -35,6 +33,11 @@ public class TokenServiceImpl implements TokenService {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 生成token
+     * @param user  生成token时的依据
+     * @return
+     */
     @Override
     public Token getToken(User user) {
         Token result = null;
@@ -101,12 +104,10 @@ public class TokenServiceImpl implements TokenService {
                     example.or().andNameEqualTo(requestPermission);
                     List<Permission> permissionList = permissionMapper.selectByExample(example);
                     //用户所拥有的权限
-                    UserRoleExample userRoleExample = new UserRoleExample();
-                    userRoleExample.or().andUserIdEqualTo(result.getUserId());
-                    List<UserRole> userRole = userRoleMapper.selectByExample(userRoleExample);
-                    if (permissionList.size() > 0 && userRole.size() > 0) {
+                    User user = userMapper.selectByPrimaryKey(result.getUserId());
+                    if (user != null) {
                         int requestPermissionId = permissionList.get(0).getId();
-                        int roleId = roleMapper.selectByPrimaryKey(userRole.get(0).getRoleId()).getId();
+                        int roleId = roleMapper.selectByPrimaryKey(user.getRoleId()).getId();
                         RolePermissionExample rpExample = new RolePermissionExample();
                         rpExample.or().andRoleIdEqualTo(roleId).andPermissionIdEqualTo(requestPermissionId);
                         List<RolePermission> list = rolePermissionMapper.selectByExample(rpExample);

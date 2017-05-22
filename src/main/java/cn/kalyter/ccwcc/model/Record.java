@@ -1,5 +1,7 @@
 package cn.kalyter.ccwcc.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,23 +16,20 @@ public class Record {
 
     private Integer birdCount;
 
-    private String position;
+    private Integer checkpointId;
 
     private String detail;
 
-    private Double lat;
-
-    private Double lon;
-
     private String weather;
 
-    private String category;
+    private Double latitude;
 
-    private Date recordTime;
-
-    private String species;
+    private Double longitude;
 
     private Integer visitTimes;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date recordTime;
 
     private Boolean isDeleted;
 
@@ -70,12 +69,12 @@ public class Record {
         this.birdCount = birdCount;
     }
 
-    public String getPosition() {
-        return position;
+    public Integer getCheckpointId() {
+        return checkpointId;
     }
 
-    public void setPosition(String position) {
-        this.position = position == null ? null : position.trim();
+    public void setCheckpointId(Integer checkpointId) {
+        this.checkpointId = checkpointId;
     }
 
     public String getDetail() {
@@ -86,22 +85,6 @@ public class Record {
         this.detail = detail == null ? null : detail.trim();
     }
 
-    public Double getLat() {
-        return lat;
-    }
-
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    public Double getLon() {
-        return lon;
-    }
-
-    public void setLon(Double lon) {
-        this.lon = lon;
-    }
-
     public String getWeather() {
         return weather;
     }
@@ -110,28 +93,20 @@ public class Record {
         this.weather = weather == null ? null : weather.trim();
     }
 
-    public String getCategory() {
-        return category;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setCategory(String category) {
-        this.category = category == null ? null : category.trim();
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
-    public Date getRecordTime() {
-        return recordTime;
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setRecordTime(Date recordTime) {
-        this.recordTime = recordTime;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species == null ? null : species.trim();
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public Integer getVisitTimes() {
@@ -140,6 +115,14 @@ public class Record {
 
     public void setVisitTimes(Integer visitTimes) {
         this.visitTimes = visitTimes;
+    }
+
+    public Date getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(Date recordTime) {
+        this.recordTime = recordTime;
     }
 
     public Boolean getIsDeleted() {

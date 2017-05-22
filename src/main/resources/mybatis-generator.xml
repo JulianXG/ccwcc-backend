@@ -18,7 +18,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/ccwcc"
                         userId="root"
-                        password="root"/>
+                        password="ease1234"/>
 
         <!--实体类-->
         <javaModelGenerator targetPackage="cn.kalyter.ccwcc.model"
@@ -41,7 +41,8 @@
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
         <!--<table tableName="role"-->
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
-        <!--<table tableName="user"/>-->
+        <!--<table tableName="user"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
         <!--<table tableName="user_role"-->
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
         <!--<table tableName="permission"-->
@@ -50,7 +51,9 @@
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
         <!--<table tableName="token"-->
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
-        <table tableName="checkpoint"
+        <!--<table tableName="checkpoint"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <table tableName="user_checkpoint"
                enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>
 
     </context>

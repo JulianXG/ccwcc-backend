@@ -27,6 +27,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (request.getMethod().toUpperCase().equals("OPTIONS")) {
+            return true;
+        }
         String token = request.getHeader(TOKEN);
         if (tokenService.validateToken(token, request.getRequestURI()) != null) {
             return true;

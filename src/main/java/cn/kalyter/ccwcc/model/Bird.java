@@ -21,6 +21,8 @@ public class Bird {
 
     private String family;
 
+    private Integer birdCount;
+
     private String genus;
 
     private String category;
@@ -42,6 +44,24 @@ public class Bird {
     private Date createTime;
 
     private Date updateTime;
+
+    private Date recordTime;
+
+    public Date getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(Date recordTime) {
+        this.recordTime = recordTime;
+    }
+
+    public Integer getBirdCount() {
+        return birdCount;
+    }
+
+    public void setBirdCount(Integer birdCount) {
+        this.birdCount = birdCount;
+    }
 
     public Integer getId() {
         return id;

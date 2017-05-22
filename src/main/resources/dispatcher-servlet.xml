@@ -13,12 +13,21 @@
 	<context:component-scan base-package="cn.kalyter.ccwcc.spring,cn.kalyter.ccwcc.controller"/>
     <mvc:default-servlet-handler/>
 
-	<!--spring 注释支持-->
+    <!--spring 注释支持-->
 	<mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <value>application/json;charset=UTF-8</value>
+                </property>
+                <property name="objectMapper">
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                        <property name="dateFormat">
+                            <bean class="java.text.SimpleDateFormat">
+                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
+                            </bean>
+                        </property>
+                    </bean>
                 </property>
             </bean>
         </mvc:message-converters>

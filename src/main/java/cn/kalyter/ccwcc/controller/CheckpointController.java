@@ -6,9 +6,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by Kalyter on 1/23/2017.
@@ -24,5 +24,20 @@ public class CheckpointController {
     @ResponseBody
     public Response getBrief() {
         return Response.OK(checkpointService.getBrief());
+    }
+
+    @ApiOperation(value = "根据用户获取用户的检查地")
+    @ResponseBody
+    @RequestMapping(value = "/checkpoints/user/{userId}", method = RequestMethod.GET)
+    public Response getCheckpointsByUserId(@PathVariable("userId") int userId) {
+        return Response.OK(checkpointService.getCheckpointsByUserId(userId));
+    }
+
+    @ApiOperation(value = "更改用户检查地")
+    @ResponseBody
+    @RequestMapping(value = "/checkpoints/user/{userId}", method = RequestMethod.POST)
+    public Response postUserCheckpoints(@PathVariable("userId") int userId,
+                                        @RequestBody List<Integer> checkpoints) {
+        return Response.OK(checkpointService.changeUserCheckpoints(userId, checkpoints));
     }
 }

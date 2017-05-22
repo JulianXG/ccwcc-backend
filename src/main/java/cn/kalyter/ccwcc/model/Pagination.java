@@ -49,6 +49,7 @@ public class Pagination<T> {
         Map<String, Object> result = new HashMap<>();
         result.put("page", getPage());
         result.put("pageSize", getPageSize());
+        result.put("total", getTotal());
         result.put("rows", getRows());
         return result;
     }

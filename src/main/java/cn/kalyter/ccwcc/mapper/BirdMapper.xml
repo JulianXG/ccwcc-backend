@@ -86,6 +86,23 @@
     category, one_percent_standard, threatened, is_water_bird, is_wetland_depend_bird,
     zh_pinyin, is_alive, is_deleted, create_time, update_time
   </sql>
+  <sql id="Excel_Column_List">
+    b.code,b.name_zh,b.name_en,b.category,b.one_percent_standard,b.threatened,r.bird_count birdCount,r.record_time recordTime
+  </sql>
+  <select id="getExcelData" resultMap="BaseResultMap">
+    SELECT
+      <include refid="Excel_Column_List"/>
+
+    FROM record r LEFT JOIN bird b ON b.id = r.bird_id
+  <where>
+    <if test="keyword!=null">
+      and  (
+      b.name_zh like concat('%',#{keyword},'%') or
+      b.category like concat('%',#{keyword},'%')
+      )
+    </if>
+  </where>
+  </select>
   <select id="selectByExample" parameterType="cn.kalyter.ccwcc.model.BirdExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -268,6 +285,77 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  <select id="getBirdName" resultMap="BaseResultMap">
+    SELECT DISTINCT r.bird_id,b.name_zh,b.category
+    FROM record r LEFT JOIN bird b on r.bird_id = b.id
+    <where>
+      <if test="startDate != null and endDate != null">
+        r.record_time &lt;= #{endDate} and r.record_time &gt;= #{startDate} and
+      </if>
+     <if test="keyword!=null">
+      (b.name_zh like concat('%',#{keyword},'%') or b.category like concat('%',#{keyword},'%') )
+      </if>
+    </where>
+    <if test="beginIndex != null and pageSize != null">
+      LIMIT #{beginIndex}, #{pageSize}
+    </if>
+  </select>
+  <select id="getBirdListByMonth" resultMap="BaseResultMap">
+    SELECT  r.bird_id id,b.name_zh,b.category, SUM(r.bird_count) birdCount
+    FROM record r LEFT JOIN bird b on r.bird_id = b.id
+    <where> r.record_time &lt;= #{endDate} and r.record_time &gt;= #{startDate}
+      <if test="keyword!=null">
+        and  (
+        b.name_zh like concat('%',#{keyword},'%') or
+        b.category like concat('%',#{keyword},'%')
+        )
+      </if>
+    </where>
+    GROUP BY r.bird_id
+  </select>
+  <select id="getEarliestDate" resultType="java.util.Date">
+    SELECT record_time
+    FROM record r
+    LEFT JOIN bird b ON r.bird_id = b.id
+    <include refid="keywordWhereSql"/>
+    ORDER BY record_time ASC
+    LIMIT 1
+  </select>
+  <select id="getOldestDate" resultType="java.util.Date">
+    SELECT record_time
+    FROM record r
+    LEFT JOIN bird b ON r.bird_id = b.id
+    <include refid="keywordWhereSql"/>
+
+    ORDER BY record_time DESC
+    LIMIT 1
+  </select>
+  <select id="getCategories" resultType="java.lang.String">
+    SELECT DISTINCT category
+    FROM bird
+    <include refid="keywordWhereSql"/>
+  </select>
+  <select id="countBirds" resultType="java.lang.Integer">
+    SELECT COUNT(DISTINCT r.bird_id)
+    FROM record r LEFT JOIN bird b on r.bird_id = b.id
+    <where>
+      <if test="startDate != null and endDate != null">
+        r.record_time &lt;= #{endDate} and r.record_time &gt;= #{startDate} and
+      </if>
+      <if test="keyword!=null">
+        (b.name_zh like concat('%',#{keyword},'%') or b.category like concat('%',#{keyword},'%') )
+      </if>
+    </where>
+  </select>
+
+  <sql id="keywordWhereSql">
+    <where>
+      <if test="keyword != null">
+        b.name_zh LIKE CONCAT('%', #{keyword}, '%') OR
+        b.category LIKE CONCAT('%', #{keyword}, '%')
+      </if>
+    </where>
+  </sql>
   <update id="updateByExampleSelective" parameterType="map">
     update bird
     <set>

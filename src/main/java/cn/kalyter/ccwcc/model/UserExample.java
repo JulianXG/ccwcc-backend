@@ -492,6 +492,66 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andRoleIdIsNull() {
+            addCriterion("role_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdIsNotNull() {
+            addCriterion("role_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdEqualTo(Integer value) {
+            addCriterion("role_id =", value, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdNotEqualTo(Integer value) {
+            addCriterion("role_id <>", value, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdGreaterThan(Integer value) {
+            addCriterion("role_id >", value, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("role_id >=", value, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdLessThan(Integer value) {
+            addCriterion("role_id <", value, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdLessThanOrEqualTo(Integer value) {
+            addCriterion("role_id <=", value, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdIn(List<Integer> values) {
+            addCriterion("role_id in", values, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdNotIn(List<Integer> values) {
+            addCriterion("role_id not in", values, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdBetween(Integer value1, Integer value2) {
+            addCriterion("role_id between", value1, value2, "roleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRoleIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("role_id not between", value1, value2, "roleId");
+            return (Criteria) this;
+        }
+
         public Criteria andSexIsNull() {
             addCriterion("sex is null");
             return (Criteria) this;
@@ -829,76 +889,6 @@ public class UserExample {
 
         public Criteria andBirthdayNotBetween(Date value1, Date value2) {
             addCriterionForJDBCDate("birthday not between", value1, value2, "birthday");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointIsNull() {
-            addCriterion("checkpoint is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointIsNotNull() {
-            addCriterion("checkpoint is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointEqualTo(String value) {
-            addCriterion("checkpoint =", value, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointNotEqualTo(String value) {
-            addCriterion("checkpoint <>", value, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointGreaterThan(String value) {
-            addCriterion("checkpoint >", value, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointGreaterThanOrEqualTo(String value) {
-            addCriterion("checkpoint >=", value, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointLessThan(String value) {
-            addCriterion("checkpoint <", value, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointLessThanOrEqualTo(String value) {
-            addCriterion("checkpoint <=", value, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointLike(String value) {
-            addCriterion("checkpoint like", value, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointNotLike(String value) {
-            addCriterion("checkpoint not like", value, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointIn(List<String> values) {
-            addCriterion("checkpoint in", values, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointNotIn(List<String> values) {
-            addCriterion("checkpoint not in", values, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointBetween(String value1, String value2) {
-            addCriterion("checkpoint between", value1, value2, "checkpoint");
-            return (Criteria) this;
-        }
-
-        public Criteria andCheckpointNotBetween(String value1, String value2) {
-            addCriterion("checkpoint not between", value1, value2, "checkpoint");
             return (Criteria) this;
         }
 

@@ -13,6 +13,8 @@ public class User {
 
     private String password;
 
+    private Integer roleId;
+
     private String sex;
 
     private String qq;
@@ -23,7 +25,7 @@ public class User {
 
     private Date birthday;
 
-    private String checkpoint;
+    private int checkpointId;
 
     private Date loginTime;
 
@@ -77,6 +79,14 @@ public class User {
         this.password = password == null ? null : password.trim();
     }
 
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
     public String getSex() {
         return sex;
     }
@@ -115,14 +125,6 @@ public class User {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public String getCheckpoint() {
-        return checkpoint;
-    }
-
-    public void setCheckpoint(String checkpoint) {
-        this.checkpoint = checkpoint == null ? null : checkpoint.trim();
     }
 
     public Date getLoginTime() {
@@ -171,5 +173,13 @@ public class User {
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public int getCheckpointId() {
+        return checkpointId;
+    }
+
+    public void setCheckpointId(int checkpointId) {
+        this.checkpointId = checkpointId;
     }
 }

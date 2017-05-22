@@ -6,15 +6,16 @@ package cn.kalyter.ccwcc.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Response {
+public class Response<T> {
     private int code;
     private String message;
-    private Map<String, Object> data;
+    private T data;
+//    private Map<String, Object> data;
 
     public Response() {
     }
 
-    public Response(int code, String message, Map<String, Object> data) {
+    public Response(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -36,13 +37,22 @@ public class Response {
         this.message = message;
     }
 
-    public Map<String, Object> getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Map<String, Object> data) {
+    public void setData(T data) {
         this.data = data;
     }
+
+    //
+//    public Map<String, Object> getData() {
+//        return data;
+//    }
+//
+//    public void setData(Map<String, Object> data) {
+//        this.data = data;
+//    }
 
     public void setStatus(ResponseStatus status) {
         setCode(status.getCode());
@@ -62,23 +72,23 @@ public class Response {
      * @param data Map<String, Object>类型
      * @return 返回Map数据的response
      */
-    public static Response OK(Map<String, Object> data) {
-        Response result = new Response();
+    public static <T> Response OK(T data) {
+        Response<T> result = new Response<>();
         result.setStatus(Constant.OK);
         result.setData(data);
         return result;
     }
-
-    /**
-     * @param result Object类型
-     * @return 直接返回Object类型数据的response
-     */
-    public static Response OK(Object result) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("result", result);
-        return new Response(Constant.OK.getCode(), Constant.OK.getMessage(), map);
-    }
-
+//
+//    /**
+//     * @param result Object类型
+//     * @return 直接返回Object类型数据的response
+//     */
+//    public static Response OK(Object result) {
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("result", result);
+//        return new Response(Constant.OK.getCode(), Constant.OK.getMessage(), map);
+//    }
+//
     public static Response STATUS(ResponseStatus status) {
         Response response = new Response();
         response.setCode(status.getCode());

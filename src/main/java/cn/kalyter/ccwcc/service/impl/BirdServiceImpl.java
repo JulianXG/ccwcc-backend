@@ -21,8 +21,7 @@ public class BirdServiceImpl implements BirdService {
     public List<Bird> briefInfo() {
         BirdExample example = new BirdExample();
         example.or().andIsDeletedEqualTo(false);
-        List<Bird> birds = birdMapper.selectByExample(example);
-        return birds;
+        return birdMapper.selectByExample(example);
     }
 
     @Override

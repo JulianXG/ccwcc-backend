@@ -17,7 +17,7 @@ public class Checkpoint {
 
     private String detail;
 
-    private Double lontitude;
+    private Double longitude;
 
     private Double latitude;
 
@@ -83,12 +83,12 @@ public class Checkpoint {
         this.detail = detail == null ? null : detail.trim();
     }
 
-    public Double getLontitude() {
-        return lontitude;
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setLontitude(Double lontitude) {
-        this.lontitude = lontitude;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public Double getLatitude() {

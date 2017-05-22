@@ -12,10 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserMapper {
     int countByExample(UserExample example);
 
-    int deleteByExample(UserExample example);
-
-    int deleteByPrimaryKey(Integer id);
-
     int insert(User record);
 
     int insertSelective(User record);
