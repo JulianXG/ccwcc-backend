@@ -37,15 +37,19 @@ public interface BirdMapper {
 
     List<Bird> getExcelData(@Param("keyword") String keyword);
 
-    List<Bird> getBirdName(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("keyword") String keyword, @Param("beginIndex") Integer beginIndex, @Param("pageSize") Integer pageSize);
+    List<Bird> getBirdName(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
+                           @Param("keyword") String keyword, @Param("beginIndex") Integer beginIndex,
+                           @Param("pageSize") Integer pageSize, @Param("checkpointId") int checkpointId);
 
-    int countBirds(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("keyword") String keyword);
+    int countBirds(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
+                   @Param("keyword") String keyword, @Param("checkpointId") int checkpointId);
 
-	List<Bird> getBirdListByMonth(@Param("startDate") Date startDate, @Param("endDate") Date endDate, @Param("keyword") String keyword);
+	List<Bird> getBirdListByMonth(@Param("startDate") Date startDate, @Param("endDate") Date endDate,
+                                  @Param("keyword") String keyword, @Param("checkpointId") int checkpointId);
 
-    Date getEarliestDate(@Param("keyword") String keyword);
+    Date getEarliestDate(@Param("keyword") String keyword, @Param("checkpointId") int checkpointId);
 
-    Date getOldestDate(@Param("keyword") String keyword);
+    Date getOldestDate(@Param("keyword") String keyword, @Param("checkpointId") int checkpointId);
 
     List<String> getCategories(String keyword);
 }

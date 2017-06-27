@@ -1,11 +1,14 @@
 package cn.kalyter.ccwcc.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
     private Integer id;
 
     private String username;
+
+    private List<UserCheckpoint> allCheckpoints;
 
     private String email;
 
@@ -32,6 +35,8 @@ public class User {
     private Integer loginCount;
 
     private Date lastLoginTime;
+
+    private Integer status;
 
     private Date createTime;
 
@@ -151,6 +156,14 @@ public class User {
         this.lastLoginTime = lastLoginTime;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -181,5 +194,13 @@ public class User {
 
     public void setCheckpointId(int checkpointId) {
         this.checkpointId = checkpointId;
+    }
+
+    public List<UserCheckpoint> getAllCheckpoints() {
+        return allCheckpoints;
+    }
+
+    public void setAllCheckpoints(List<UserCheckpoint> allCheckpoints) {
+        this.allCheckpoints = allCheckpoints;
     }
 }

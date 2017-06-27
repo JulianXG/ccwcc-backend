@@ -33,6 +33,7 @@ public class DownloadExcelController {
 	public Response getExcelData(@RequestParam(value = "keyword", required = false) String keyword,
                                  @RequestParam(value = "startTime", required = false) String startTimeContent,
                                  @RequestParam(value = "endTime", required = false) String endTimeContent,
+                                 @RequestParam("checkpointId") int checkpointId,
                                  HttpServletResponse response) {
         // FIXME: 2017-5-22 0022 在这里对于Jackson里面对于Date字符串的解析，
         // 反序列化，真的是头疼，现在我自己手动来解析
@@ -45,9 +46,9 @@ public class DownloadExcelController {
             if (endTimeContent != null && !endTimeContent.equals("")) {
                 endTime = Config.yyyyMMddHHmmss.parse(endTimeContent);
             }
-            List<Bird> nameList = excelService.getNameList(startTime, endTime, keyword);
+            List<Bird> nameList = excelService.getNameList(startTime, endTime, keyword, checkpointId);
             if (nameList != null && nameList.size() > 0) {
-                Workbook workbook = excelService.createExcel(nameList, startTime, endTime, keyword);
+                Workbook workbook = excelService.createExcel(nameList, startTime, endTime, keyword, checkpointId);
 
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 workbook.write(os);
@@ -75,11 +76,12 @@ public class DownloadExcelController {
 
 	@ApiOperation("根据关键词和时间段，获取记录数据")
 	@ResponseBody
-	@RequestMapping(value = "/role_user/excel/search/{page}/{pageSize}", method = RequestMethod.POST)
+	@RequestMapping(value = "/role_user/excel/search/{checkpointId}/{page}/{pageSize}", method = RequestMethod.POST)
 	public Response search(@RequestBody KeywordMiddle keywordMiddle,
 						   @PathVariable("pageSize") int pageSize,
-						   @PathVariable("page") int page) {
+						   @PathVariable("page") int page,
+                           @PathVariable("checkpointId") int checkpointId) {
 		return Response.OK(excelService.getRawData(keywordMiddle.getStartTime(),
-				keywordMiddle.getEndTime(), keywordMiddle.getKeyword(), page, pageSize));
+				keywordMiddle.getEndTime(), keywordMiddle.getKeyword(), page, pageSize, checkpointId));
 	}
 }

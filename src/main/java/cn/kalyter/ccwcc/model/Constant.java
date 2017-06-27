@@ -18,6 +18,9 @@ public class Constant {
     public static final ResponseStatus CHECKPOINT_ERROR =
             new ResponseStatus(405, "用户不属于此检查地");
 
+    public static final ResponseStatus USER_UNAVAILABLE =
+            new ResponseStatus(406, "用户暂未绑定邮箱，暂不可用");
+
     public static final ResponseStatus ERROR =
             new ResponseStatus(500, "请求出错");
 

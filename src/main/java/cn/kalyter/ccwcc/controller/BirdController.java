@@ -25,7 +25,7 @@ public class BirdController {
         return Response.OK(birdService.saveBird(bird));
     }
 
-    @ApiOperation(value = "根据关键词搜索鸟类")
+    @ApiOperation(value = "获取所有鸟类")
     @ResponseBody
     @RequestMapping(value = "/role_user/bird/brief", method = RequestMethod.GET)
     public Response postSearchBird() {

@@ -15,6 +15,19 @@ Date: 2017-04-27 11:06:50
 
 SET FOREIGN_KEY_CHECKS=0;
 
+DROP TABLE IF EXISTS `validate_code`;
+CREATE TABLE `validate_code` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_id` INT DEFAULT NULL COMMENT '用户ID',
+  `code` VARCHAR(40) DEFAULT NULL COMMENT '验证码',
+  `request_time` datetime DEFAULT NULL COMMENT '请求时间',
+  `expire_time` int(10) DEFAULT '24' COMMENT '过期时间,单位分钟',
+  `is_deleted` tinyint(1) DEFAULT '0' COMMENT '删除标签',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+)ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT '验证码';
+
 -- ----------------------------
 -- Table structure for bird
 -- ----------------------------
@@ -604,6 +617,7 @@ CREATE TABLE `user` (
   `nickname` varchar(50) DEFAULT NULL COMMENT '用户昵称',
   `tel` varchar(13) DEFAULT NULL COMMENT '手机号码',
   `birthday` date DEFAULT NULL COMMENT '用户生日',
+  `status` INT(1) DEFAULT 0 COMMENT '账号状态：0，待认证;1，正常可用',
   `login_time` datetime DEFAULT NULL COMMENT '此次登录时间',
   `login_count` int(10) DEFAULT NULL COMMENT '登录次数统计',
   `last_login_time` datetime DEFAULT NULL COMMENT '上次登录时间',

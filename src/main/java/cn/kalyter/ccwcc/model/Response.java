@@ -69,6 +69,15 @@ public class Response<T> {
     }
 
     /**
+     * @return 返回error的response
+     */
+    public static Response ERROR() {
+        Response response = new Response();
+        response.setStatus(Constant.ERROR);
+        return response;
+    }
+
+    /**
      * @param data Map<String, Object>类型
      * @return 返回Map数据的response
      */

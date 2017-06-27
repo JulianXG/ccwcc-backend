@@ -25,6 +25,28 @@ public class UserController {
     @Autowired
     private TokenService tokenService;
 
+    @ApiOperation(value = "忘记密码", notes = "验证邮箱之后，更改密码")
+    @ResponseBody
+    @RequestMapping(value = "/forgetPassword/{userId}/{password}", method = RequestMethod.GET)
+    public Response postForgetPassword(@PathVariable("userId") int userId,
+                                       @PathVariable("password") String password) {
+        return Response.OK(userService.changePassword(userId, password));
+    }
+
+    @ApiOperation(value = "检查用户名是否重复")
+    @ResponseBody
+    @RequestMapping(value = "/username/check/{username}", method = RequestMethod.GET)
+    public Response checkUsername(@PathVariable("username") String username) {
+        return Response.OK(userService.checkUsername(username));
+    }
+
+    @ApiOperation(value = "检查用户名和邮箱")
+    @ResponseBody
+    @RequestMapping(value = "/username_email", method = RequestMethod.POST)
+    public Response checkUsernameEmail(@RequestBody UserEmail userEmail) {
+        return Response.OK(userService.checkUsernameEmail(userEmail));
+    }
+
     @ApiOperation(value = "用户登录接口", notes = "身份验证后，获取用户信息上下文以及token值")
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -42,9 +64,9 @@ public class UserController {
         return response;
     }
 
-    @ApiOperation(value = "超级管理员新增用户接口")
+    @ApiOperation(value = "用户注册")
     @ResponseBody
-    @RequestMapping(value = "/role_root/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     public Response postRegister(@RequestBody User user) {
         User register = userService.register(user);
         if (register != null) {
@@ -52,7 +74,7 @@ public class UserController {
             map.put("user", register);
             return Response.OK(map);
         } else {
-            return Response.STATUS(Constant.USERNAME_ALREADY_EXISTS);
+            return Response.STATUS(Constant.ERROR);
         }
     }
 

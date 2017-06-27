@@ -3,13 +3,14 @@
  */
 package cn.kalyter.ccwcc.service.impl;
 
+import cn.kalyter.ccwcc.common.Config;
 import cn.kalyter.ccwcc.dao.UserCheckpointMapper;
 import cn.kalyter.ccwcc.dao.UserMapper;
 import cn.kalyter.ccwcc.model.*;
+import cn.kalyter.ccwcc.service.MailService;
 import cn.kalyter.ccwcc.service.UserService;
 import cn.kalyter.ccwcc.service.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +25,8 @@ public class UserServiceImpl implements UserService {
     private UtilService utilService;
     @Autowired
     private UserCheckpointMapper userCheckpointMapper;
+    @Autowired
+    private MailService mailService;
 
     @Override
     public int update(User user) {
@@ -69,7 +72,7 @@ public class UserServiceImpl implements UserService {
                     break;
                 }
             }
-            if (isCheckpointLegal) {
+            if (isCheckpointLegal && selectUser.getStatus() == Config.USER_AVAILABLE) {
                 Date now = new Date();
                 Date lastLoginTime = selectUser.getLoginTime();
                 if (lastLoginTime == null) {
@@ -83,9 +86,12 @@ public class UserServiceImpl implements UserService {
                 }
                 selectUser.setLoginCount(loginCount + 1);
                 userMapper.updateByPrimaryKeySelective(selectUser);
+                selectUser.setAllCheckpoints(userCheckpoints);
                 selectUser.setPassword(null);     //清除密码信息
                 response.setStatus(Constant.OK);
                 response.setData(selectUser);
+            } else if (selectUser.getStatus() != Config.USER_AVAILABLE) {
+                response.setStatus(Constant.USER_UNAVAILABLE);
             } else {
                 response.setStatus(Constant.CHECKPOINT_ERROR);
             }
@@ -99,11 +105,20 @@ public class UserServiceImpl implements UserService {
     public User register(User user) {
         user.setSex(user.getSex().equals("") ? null : user.getSex());
         try {
-            int id = userMapper.insertSelective(user);
-            user.setId(id);
+            user.setStatus(Config.USER_UNAVAILABLE);
+            userMapper.insertSelective(user);
+            mailService.sendValidateLinkMail(user.getId());
+
+            for (UserCheckpoint item : user.getAllCheckpoints()) {
+                UserCheckpoint userCheckpoint = new UserCheckpoint();
+                userCheckpoint.setUserId(user.getId());
+                userCheckpoint.setCheckpointId(item.getCheckpointId());
+                userCheckpointMapper.insertSelective(userCheckpoint);
+            }
             user.setPassword(null);
             return user;
-        } catch (DuplicateKeyException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -124,5 +139,40 @@ public class UserServiceImpl implements UserService {
         result.setPageSize(pageSize);
         result.setTotal(userMapper.countByExample(example));
         return result;
+    }
+
+    @Override
+    public int changePassword(int userId, String password) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        user.setPassword(password);
+        return userMapper.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public boolean checkUsername(String username) {
+        UserExample userExample = new UserExample();
+        userExample.or().andUsernameEqualTo(username);
+        List<User> result = userMapper.selectByExample(userExample);
+        return result.size() == 0;
+    }
+
+    @Override
+    public int checkUsernameEmail(UserEmail userEmail) {
+        UserExample userExample = new UserExample();
+        userExample.or()
+                .andUsernameEqualTo(userEmail.getUsername())
+                .andEmailEqualTo(userEmail.getEmail());
+        List<User> result = userMapper.selectByExample(userExample);
+        if (result.size() == 0) {
+            return -1;
+        } else {
+            Integer userId = result.get(0).getId();
+            try {
+                mailService.sendValidateCodeMail(userId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return userId;
+        }
     }
 }

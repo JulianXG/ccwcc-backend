@@ -29,12 +29,12 @@ public class ExcelServiceImpl implements ExcelService {
 	private RecordMapper recordMapper;
 
 	/**对Excel表进行操作*/
-	public Workbook createExcel(List<Bird> nameList, Date startDate, Date endDate, String keyword){
+	public Workbook createExcel(List<Bird> nameList, Date startDate, Date endDate, String keyword, int checkpointId){
         if (startDate == null) {
-            startDate = birdMapper.getEarliestDate(keyword);
+            startDate = birdMapper.getEarliestDate(keyword, checkpointId);
         }
         if (endDate == null) {
-            endDate = birdMapper.getOldestDate(keyword);
+            endDate = birdMapper.getOldestDate(keyword, checkpointId);
         }
 		Date addDate = startDate;
 		Date flag;
@@ -51,7 +51,7 @@ public class ExcelServiceImpl implements ExcelService {
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
 			addDate = calendar.getTime();
-			List<Bird> result = getBirdListByMonth(flag,addDate,keyword);
+			List<Bird> result = getBirdListByMonth(flag,addDate,keyword, checkpointId);
 			birdCounts.add(result);
 		}
 		Workbook wb = null;
@@ -118,14 +118,15 @@ public class ExcelServiceImpl implements ExcelService {
 	}
 
 	@Override
-	public List<Bird> getNameList(Date startDate, Date endDate,String keyword) {
-        return birdMapper.getBirdName(startDate,endDate,keyword, null, null);
+	public List<Bird> getNameList(Date startDate, Date endDate, String keyword, int checkpointId) {
+        return birdMapper.getBirdName(startDate,endDate,keyword, null, null, checkpointId);
 	}
 
     @Override
-    public Pagination<Bird> getPagination(Date startTime, Date endTime, String keyword, int page, int pageSize) {
+    public Pagination<Bird> getPagination(Date startTime, Date endTime, String keyword,
+                                          int page, int pageSize, int checkpointId) {
 		Pagination<Bird> pagination = new Pagination<>();
-        List<Bird> allBird = getNameList(startTime, endTime, keyword);
+        List<Bird> allBird = getNameList(startTime, endTime, keyword, checkpointId);
         pagination.setPage(page);
         pagination.setPageSize(pageSize);
         pagination.setTotal(allBird.size());
@@ -135,23 +136,24 @@ public class ExcelServiceImpl implements ExcelService {
 
     /**逐月获取鸟类信息*/
     @Override
-	public List<Bird> getBirdListByMonth(Date startDate, Date endDate,String keyword) {
-		return birdMapper.getBirdListByMonth(startDate,endDate,keyword);
+	public List<Bird> getBirdListByMonth(Date startDate, Date endDate,String keyword, int checkpointId) {
+		return birdMapper.getBirdListByMonth(startDate,endDate,keyword, checkpointId);
 	}
 
     @Override
-    public Pagination<Map<String, Object>> getRawData(Date startTime, Date endTime, String keyword, int page, int pageSize) {
+    public Pagination<Map<String, Object>> getRawData(Date startTime, Date endTime, String keyword,
+                                                      int page, int pageSize, int checkpointId) {
         // 如果startTime和endTime不存在默认就是全局的
         Pagination<Map<String, Object>> pagination = new Pagination<>();
         if (startTime == null) {
-            startTime = birdMapper.getEarliestDate(keyword);
+            startTime = birdMapper.getEarliestDate(keyword, checkpointId);
         }
         if (endTime == null) {
-            endTime = birdMapper.getOldestDate(keyword);
+            endTime = birdMapper.getOldestDate(keyword, checkpointId);
         }
 
         // 设置分页的一些基本值
-        int total = birdMapper.countBirds(startTime, endTime, keyword);
+        int total = birdMapper.countBirds(startTime, endTime, keyword, checkpointId);
         pagination.setTotal(total);
         pagination.setPage(page);
         pagination.setPageSize(pageSize);
@@ -165,7 +167,7 @@ public class ExcelServiceImpl implements ExcelService {
             lists.add(timeMap);
 
             List<Bird> birds = birdMapper.getBirdName(startTime, endTime,
-                    keyword, (page - 1) * pageSize, pageSize);
+                    keyword, (page - 1) * pageSize, pageSize, checkpointId);
             for (Bird bird : birds) {
                 Map<String, Object> map =new HashMap<>();
                 map.put("name", bird.getNameZh());
@@ -184,7 +186,7 @@ public class ExcelServiceImpl implements ExcelService {
                 calendar.set(Calendar.MINUTE, 0);
                 calendar.set(Calendar.SECOND, 0);
                 Date nextTime = calendar.getTime();
-                List<Bird> tmpBirds = birdMapper.getBirdListByMonth(increment, nextTime, keyword);
+                List<Bird> tmpBirds = birdMapper.getBirdListByMonth(increment, nextTime, keyword, checkpointId);
                 for (Bird bird : tmpBirds) {
                     for (Map<String, Object> map : lists) {
                         if (map.containsKey("name") &&

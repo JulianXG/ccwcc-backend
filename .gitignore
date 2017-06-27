@@ -16,3 +16,4 @@ test/
 *.zip
 *.tar.gz
 *.rar
+.idea

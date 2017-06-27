@@ -41,8 +41,8 @@
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
         <!--<table tableName="role"-->
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
-        <!--<table tableName="user"-->
-               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <table tableName="user"
+               enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>
         <!--<table tableName="user_role"-->
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
         <!--<table tableName="permission"-->
@@ -53,8 +53,10 @@
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
         <!--<table tableName="checkpoint"-->
                <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
-        <table tableName="user_checkpoint"
-               enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>
+        <!--<table tableName="user_checkpoint"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
+        <!--<table tableName="validate_code"-->
+               <!--enableDeleteByPrimaryKey="false" enableDeleteByExample="false"/>-->
 
     </context>
 </generatorConfiguration>
