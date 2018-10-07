@@ -101,6 +101,6 @@ public class RecordController {
     @ResponseBody
     @RequestMapping(value = "/record/search/{keywords}", method = RequestMethod.GET)
     public Response getSearchRecord(@PathVariable("keywords") String keywords) {
-        return Response.OK();
+        return Response.OK(recordService.getRecordByKeywords(keywords));
     }
 }

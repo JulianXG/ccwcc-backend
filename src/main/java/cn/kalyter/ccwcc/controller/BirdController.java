@@ -36,6 +36,6 @@ public class BirdController {
     @ResponseBody
     @RequestMapping(value = "/bird/category", method = RequestMethod.GET)
     public Response getCategory() {
-        return Response.OK();
+        return Response.OK(birdService.briefInfo());
     }
 }
